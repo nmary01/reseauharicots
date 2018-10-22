@@ -8,6 +8,7 @@
         <title>Le réseau des haricots</title>
     </h:head>
     <h:body>
+        <h1>Bienvenue sur le réseau des haricots !</h1>
         <p:dataTable value="#{vue.utilisateurs}" var="user" draggableColumns="true">
             <p:column headerText="Login">
                 <h:outputText value="#{user.login}"/>
@@ -21,38 +22,19 @@
             <p:column headerText="Nom">
                 <h:outputText value="#{user.nom}"/>
             </p:column>
-            <p:column headerText="email">
+            <p:column headerText="Email">
                 <h:outputText value="#{user.email}"/>
             </p:column>
-            <p:column headerText="idVille">
-                <h:outputText value="#{user.idVille}"/>
+            <p:column headerText="Ville">
+                <h:outputText value="#{user.idVille.nomVille}"/>
+            </p:column>
+            <p:column headerText="Region">
+                <h:outputText value="#{user.idVille.idRegion.nomRegion}"/>
             </p:column>
         </p:dataTable>
-        <h3>Ajout</h3>
-        <h:form>
-            Login:
-            <p:inputText value="#{vue.login}"/><br/>
-            Mdp:
-            <p:inputText value="#{vue.mdp}"/><br/>
-            Prenom:
-            <p:inputText value="#{vue.prenom}"/><br/>
-            Nom:
-            <p:inputText value="#{vue.nom}"/><br/>
-            Email:
-            <p:inputText value="#{vue.email}"/><br/>
-            Ville:
-            <p:autoComplete minQueryLength="3" value="#{vue.ville}" completeMethod="#{vue.completeText}"/><br/>
-            Region:
-            <p:selectOneMenu value="#{vue.region}">
-                <f:selectItems value="#{vue.regionsNames}" />
-            </p:selectOneMenu>
-            <p:commandButton value="Ajouter" ajax="false" action="#{vue.addUtilisateur()}"/>
-        </h:form>
-        <h3>Suppression</h3>
-        <h:form>
-            <p:inputText value="#{vue.login}"/>
-            <p:commandButton value="Supprimer" ajax="false" action="#{vue.removeUtilisateur()}"/>
-        </h:form>
+        <h:link value="Page de connexion" outcome="connection" /><br/>
+        <h:link value="Faire une demande" outcome="demande" /><br/>
+        <h:link value="Proposer une offre" outcome="offre"/>
     </h:body>
 </html>
 

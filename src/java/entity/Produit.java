@@ -56,6 +56,9 @@ public class Produit implements Serializable {
     private Collection<Demande> demandeCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProduit")
     private Collection<Offre> offreCollection;
+    @Size(min = 1, max = 100)
+    @Column(name = "Image")
+    private String image;
 
     public Produit() {
     }
@@ -91,6 +94,14 @@ public class Produit implements Serializable {
 
     public void setIdCategorie(Categorie idCategorie) {
         this.idCategorie = idCategorie;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @XmlTransient

@@ -190,8 +190,6 @@ public class Vue implements Serializable {
     
     public void addUtilisateur(){
         Utilisateur newUtilisateur=new Utilisateur();
-        Ville newVille= villeDAO.find(1);
-        newVille.setIdVille(1);
         newUtilisateur.setLogin(login);
         newUtilisateur.setMdp(mdp);
         newUtilisateur.setPrenom(prenom);

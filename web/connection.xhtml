@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Le réseau des haricots</title>
+    </h:head>
+    <h:body>
+        <h3>Inscription</h3>
+        <h:form>
+            <p:outputLabel value="Login:" for="login"/>
+            <p:inputText id="login" value="#{vue.login}"/><br/>
+            <p:outputLabel value="Mot de passe:" for="mdp"/>
+            <p:inputText id="mdp" value="#{vue.mdp}"/><br/>
+            <p:outputLabel value="Prénom:" for="prenom"/>
+            <p:inputText id="prenom" value="#{vue.prenom}"/><br/>
+            <p:outputLabel value="Nom:" for="nom"/>
+            <p:inputText id="nom" value="#{vue.nom}"/><br/>
+            <p:outputLabel value="Email:" for="email"/>
+            <p:inputText id="email" value="#{vue.email}"/><br/>
+            <p:outputLabel value="Ville:" for="ville"/>
+            <p:autoComplete id="ville" minQueryLength="3" value="#{vue.ville}" completeMethod="#{vue.completeText}"/><br/>
+            <p:outputLabel value="Region:" for="region"/>
+            <p:selectOneMenu id="region" value="#{vue.region}">
+                <f:selectItems value="#{vue.regionsNames}" />
+            </p:selectOneMenu>
+            <p:commandButton value="Ajouter" ajax="false" action="#{vue.addUtilisateur()}"/>
+        </h:form>
+        <h3>Connexion</h3>
+        <h:form>
+            <p:outputLabel value="Login:" for="login"/>
+            <p:inputText id="login" value="#{vue.login}"/>
+            <p:outputLabel value="Mot de passe:" for="mdp"/>
+            <p:inputText id="mdp" value="#{vue.mdp}"/>
+            <p:commandButton value="Connexion" ajax="false"/>
+        </h:form>
+        <h3>Suppression</h3>
+        <h:form>
+            <p:outputLabel value="Login:" for="login"/>
+            <p:inputText id="login" value="#{vue.login}"/>
+            <p:commandButton value="Supprimer" ajax="false" action="#{vue.removeUtilisateur()}"/>
+        </h:form>
+        <h:link value="Page d'accueil" outcome="index"/>
+    </h:body>
+</html>
+

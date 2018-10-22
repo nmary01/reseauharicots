@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Le réseau des haricots</title>
+    </h:head>
+    <h:body>
+        <h3>Proposer une offre</h3>
+        <h:form>
+            <p:outputLabel value="Produit:" for="produit"/>
+            <p:autoComplete id="produit" minQueryLength="3" value="#{vueO.nomProduit}" completeMethod="#{vueO.completeText}"/><br/>
+            <p:outputLabel value="Quantité:" for="quantite"/>
+            <p:inputText id="quantite" value="#{vueO.quantite}"/><br/>
+            <p:outputLabel value="Prix Unitaire Min:" for="pumin"/>
+            <p:inputText id="pumin" value="#{vueO.prixMin}"/><br/>
+            <p:commandButton value="Proposer une offre" ajax="false" action="#{vueO.addOffre()}"/>
+        </h:form>
+        <h3>Vos offres</h3>
+        <p:dataTable value="#{vueO.offres}" var="offre" draggableColumns="true">
+            <p:column headerText="Id Offre">
+                <h:outputText value="#{offre.idOffre}"/>
+            </p:column>
+            <p:column headerText="Date">
+                <h:outputText value="#{offre.date}"/>
+            </p:column>
+            <p:column headerText="Produit">
+                <h:outputText value="#{offre.idProduit.nomProduit}"/>
+            </p:column>
+            <p:column headerText="Quantité">
+                <h:outputText value="#{offre.quantite}"/>
+            </p:column>
+            <p:column headerText="Prix unitaire min">
+                <h:outputText value="#{offre.prixUnitaireMin}"/>
+            </p:column>
+        </p:dataTable>
+        <h:link value="Page d'accueil" outcome="index"/>
+    </h:body>
+</html>
+
