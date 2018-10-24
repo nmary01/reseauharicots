@@ -7,6 +7,7 @@ package web;
 
 import dao.DemandeFacadeLocal;
 import dao.ProduitFacadeLocal;
+import dao.UtilisateurFacadeLocal;
 import entity.Demande;
 import entity.Produit;
 import javax.inject.Named;
@@ -31,6 +32,8 @@ public class VueD implements Serializable {
     DemandeFacadeLocal demandeDAO;
     @EJB
     ProduitFacadeLocal produitDAO;
+    @EJB
+    UtilisateurFacadeLocal utilisateurDAO;
     //String idD;
     //Date date;
     int quantite;
@@ -43,6 +46,14 @@ public class VueD implements Serializable {
     
     public VueD() {
         
+    }
+
+    public UtilisateurFacadeLocal getUtilisateurDAO() {
+        return utilisateurDAO;
+    }
+
+    public void setUtilisateurDAO(UtilisateurFacadeLocal utilisateurDAO) {
+        this.utilisateurDAO = utilisateurDAO;
     }
 
     public DemandeFacadeLocal getDemandeDAO() {
@@ -109,7 +120,7 @@ public class VueD implements Serializable {
         return results;
     }
     
-    public void addDemande(){
+    public void addDemande(String login){
         Demande newDemande=new Demande();
         newDemande.setIdProduit(produitDAO.find(findIdProduit(nomProduit)));
         long millis=System.currentTimeMillis();  
@@ -118,7 +129,7 @@ public class VueD implements Serializable {
         newDemande.setDate(date);
         newDemande.setPrixUnitaireMax(prixMax);
         newDemande.setQuantite(quantite);
-        //newDemande.setUtilisateurCollection(utilisateurCollection);
+        newDemande.setLogin(utilisateurDAO.find(login));
         
         demandeDAO.create(newDemande);
     }

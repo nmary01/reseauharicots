@@ -17,6 +17,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -199,11 +201,24 @@ public class Vue implements Serializable {
         newUtilisateur.setIdVille(findVille(ville,findIdRegion(region)));
         
         utilisateurDAO.create(newUtilisateur);
+        login="";
+        mdp="";
+        prenom="";
+        nom="";
+        email="";
+        ville="";
         
     }
     
     public void removeUtilisateur(){
         Utilisateur utilisateur=utilisateurDAO.find(login);
         utilisateurDAO.remove(utilisateur);
+        login="";
+    }
+    
+    public void checkConnect() {
+        FacesContext context = FacesContext.getCurrentInstance();
+         
+        context.addMessage(null, new FacesMessage("Connexion Réussie"));
     }
 }

@@ -109,7 +109,7 @@ public class Categorie implements Serializable {
 
     @Override
     public String toString() {
-        return "main.Categorie[ idCategorie=" + idCategorie + " ]";
+        return "entity.Categorie[ idCategorie=" + idCategorie + " ]";
     }
     
 }

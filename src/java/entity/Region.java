@@ -109,7 +109,7 @@ public class Region implements Serializable {
 
     @Override
     public String toString() {
-        return "main.Region[ idRegion=" + idRegion + " ]";
+        return "entity.Region[ idRegion=" + idRegion + " ]";
     }
     
 }

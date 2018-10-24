@@ -77,7 +77,7 @@ public class VentePK implements Serializable {
 
     @Override
     public String toString() {
-        return "main.VentePK[ idOffre=" + idOffre + ", idDemande=" + idDemande + " ]";
+        return "entity.VentePK[ idOffre=" + idOffre + ", idDemande=" + idDemande + " ]";
     }
     
 }

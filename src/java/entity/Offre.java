@@ -16,8 +16,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -63,14 +61,12 @@ public class Offre implements Serializable {
     @NotNull
     @Column(name = "PrixUnitaireMin")
     private int prixUnitaireMin;
-    @JoinTable(name = "propose", joinColumns = {
-        @JoinColumn(name = "IdOffre", referencedColumnName = "IdOffre")}, inverseJoinColumns = {
-        @JoinColumn(name = "login", referencedColumnName = "login")})
-    @ManyToMany
-    private Collection<Utilisateur> utilisateurCollection;
     @JoinColumn(name = "IdProduit", referencedColumnName = "IdProduit")
     @ManyToOne(optional = false)
     private Produit idProduit;
+    @JoinColumn(name = "login", referencedColumnName = "login")
+    @ManyToOne(optional = false)
+    private Utilisateur login;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "offre")
     private Collection<Vente> venteCollection;
 
@@ -120,21 +116,20 @@ public class Offre implements Serializable {
         this.prixUnitaireMin = prixUnitaireMin;
     }
 
-    @XmlTransient
-    public Collection<Utilisateur> getUtilisateurCollection() {
-        return utilisateurCollection;
-    }
-
-    public void setUtilisateurCollection(Collection<Utilisateur> utilisateurCollection) {
-        this.utilisateurCollection = utilisateurCollection;
-    }
-
     public Produit getIdProduit() {
         return idProduit;
     }
 
     public void setIdProduit(Produit idProduit) {
         this.idProduit = idProduit;
+    }
+
+    public Utilisateur getLogin() {
+        return login;
+    }
+
+    public void setLogin(Utilisateur login) {
+        this.login = login;
     }
 
     @XmlTransient
@@ -168,7 +163,7 @@ public class Offre implements Serializable {
 
     @Override
     public String toString() {
-        return "main.Offre[ idOffre=" + idOffre + " ]";
+        return "entity.Offre[ idOffre=" + idOffre + " ]";
     }
     
 }

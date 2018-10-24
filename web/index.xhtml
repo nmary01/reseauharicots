@@ -9,6 +9,12 @@
     </h:head>
     <h:body>
         <h1>Bienvenue sur le réseau des haricots !</h1>
+        <h:panelGroup rendered="#{not empty user}">
+            <p>Welcome, #{user.login}</p>
+            <h:form>
+                <p:commandButton value="logout" action="#{loginController.logout}" />
+            </h:form>
+        </h:panelGroup>
         <p:dataTable value="#{vue.utilisateurs}" var="user" draggableColumns="true">
             <p:column headerText="Login">
                 <h:outputText value="#{user.login}"/>

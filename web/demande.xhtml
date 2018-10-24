@@ -16,7 +16,7 @@
             <p:inputText id="quantite" value="#{vueD.quantite}"/><br/>
             <p:outputLabel value="Prix Unitaire Max:" for="pumax"/>
             <p:inputText id="pumax" value="#{vueD.prixMax}"/><br/>
-            <p:commandButton value="Faire une demande" ajax="false" action="#{vueD.addDemande()}"/>
+            <p:commandButton value="Faire une demande" ajax="false" action="#{vueD.addDemande(loginController.loginU)}"/>
         </h:form>
         <h3>Vos demandes</h3>
         <p:dataTable value="#{vueD.demandes}" var="demande" draggableColumns="true">
@@ -34,6 +34,9 @@
             </p:column>
             <p:column headerText="Prix unitaire max">
                 <h:outputText value="#{demande.prixUnitaireMax}"/>
+            </p:column>
+            <p:column headerText="Utilisateur">
+                <h:outputText value="#{demande.login.login}"/>
             </p:column>
         </p:dataTable>
         <h:link value="Page d'accueil" outcome="index"/>

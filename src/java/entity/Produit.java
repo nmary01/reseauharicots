@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Produit.findAll", query = "SELECT p FROM Produit p")
     , @NamedQuery(name = "Produit.findByIdProduit", query = "SELECT p FROM Produit p WHERE p.idProduit = :idProduit")
-    , @NamedQuery(name = "Produit.findByNomProduit", query = "SELECT p FROM Produit p WHERE p.nomProduit = :nomProduit")})
+    , @NamedQuery(name = "Produit.findByNomProduit", query = "SELECT p FROM Produit p WHERE p.nomProduit = :nomProduit")
+    , @NamedQuery(name = "Produit.findByImage", query = "SELECT p FROM Produit p WHERE p.image = :image")})
 public class Produit implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,6 +50,9 @@ public class Produit implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "NomProduit")
     private String nomProduit;
+    @Size(max = 100)
+    @Column(name = "Image")
+    private String image;
     @JoinColumn(name = "IdCategorie", referencedColumnName = "IdCategorie")
     @ManyToOne(optional = false)
     private Categorie idCategorie;
@@ -56,9 +60,6 @@ public class Produit implements Serializable {
     private Collection<Demande> demandeCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProduit")
     private Collection<Offre> offreCollection;
-    @Size(min = 1, max = 100)
-    @Column(name = "Image")
-    private String image;
 
     public Produit() {
     }
@@ -88,20 +89,20 @@ public class Produit implements Serializable {
         this.nomProduit = nomProduit;
     }
 
-    public Categorie getIdCategorie() {
-        return idCategorie;
-    }
-
-    public void setIdCategorie(Categorie idCategorie) {
-        this.idCategorie = idCategorie;
-    }
-
     public String getImage() {
         return image;
     }
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Categorie getIdCategorie() {
+        return idCategorie;
+    }
+
+    public void setIdCategorie(Categorie idCategorie) {
+        this.idCategorie = idCategorie;
     }
 
     @XmlTransient
@@ -144,7 +145,7 @@ public class Produit implements Serializable {
 
     @Override
     public String toString() {
-        return "main.Produit[ idProduit=" + idProduit + " ]";
+        return "entity.Produit[ idProduit=" + idProduit + " ]";
     }
     
 }

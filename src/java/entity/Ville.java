@@ -122,7 +122,7 @@ public class Ville implements Serializable {
 
     @Override
     public String toString() {
-        return "main.Ville[ idVille=" + idVille + " ]";
+        return "entity.Ville[ idVille=" + idVille + " ]";
     }
     
 }

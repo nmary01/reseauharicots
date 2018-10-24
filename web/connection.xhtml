@@ -26,15 +26,16 @@
             <p:selectOneMenu id="region" value="#{vue.region}">
                 <f:selectItems value="#{vue.regionsNames}" />
             </p:selectOneMenu>
-            <p:commandButton value="Ajouter" ajax="false" action="#{vue.addUtilisateur()}"/>
+            <p:commandButton value="S'inscrire" ajax="false" action="#{vue.addUtilisateur()}"/>
         </h:form>
         <h3>Connexion</h3>
         <h:form>
+            <p:growl id="growlConnexion" showDetail="true" sticky="true" />
             <p:outputLabel value="Login:" for="login"/>
-            <p:inputText id="login" value="#{vue.login}"/>
+            <p:inputText id="login" value="#{loginController.loginU}"/>
             <p:outputLabel value="Mot de passe:" for="mdp"/>
-            <p:inputText id="mdp" value="#{vue.mdp}"/>
-            <p:commandButton value="Connexion" ajax="false"/>
+            <p:inputText id="mdp" value="#{loginController.mdp}"/>
+            <p:commandButton value="Connexion" ajax="false"  action="#{loginController.login}" update="growlConnexion"/>
         </h:form>
         <h3>Suppression</h3>
         <h:form>

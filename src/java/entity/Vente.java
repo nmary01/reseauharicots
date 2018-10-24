@@ -120,7 +120,7 @@ public class Vente implements Serializable {
 
     @Override
     public String toString() {
-        return "main.Vente[ ventePK=" + ventePK + " ]";
+        return "entity.Vente[ ventePK=" + ventePK + " ]";
     }
     
 }

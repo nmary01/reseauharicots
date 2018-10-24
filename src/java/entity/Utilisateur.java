@@ -8,14 +8,15 @@ package entity;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -71,13 +72,13 @@ public class Utilisateur implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "email")
     private String email;
-    @ManyToMany(mappedBy = "utilisateurCollection")
-    private Collection<Demande> demandeCollection;
-    @ManyToMany(mappedBy = "utilisateurCollection")
-    private Collection<Offre> offreCollection;
     @JoinColumn(name = "IdVille", referencedColumnName = "IdVille")
     @ManyToOne(optional = false)
     private Ville idVille;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "login")
+    private Collection<Demande> demandeCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "login")
+    private Collection<Offre> offreCollection;
 
     public Utilisateur() {
     }
@@ -143,6 +144,14 @@ public class Utilisateur implements Serializable {
         this.email = email;
     }
 
+    public Ville getIdVille() {
+        return idVille;
+    }
+
+    public void setIdVille(Ville idVille) {
+        this.idVille = idVille;
+    }
+
     @XmlTransient
     public Collection<Demande> getDemandeCollection() {
         return demandeCollection;
@@ -159,14 +168,6 @@ public class Utilisateur implements Serializable {
 
     public void setOffreCollection(Collection<Offre> offreCollection) {
         this.offreCollection = offreCollection;
-    }
-
-    public Ville getIdVille() {
-        return idVille;
-    }
-
-    public void setIdVille(Ville idVille) {
-        this.idVille = idVille;
     }
 
     @Override
@@ -191,7 +192,7 @@ public class Utilisateur implements Serializable {
 
     @Override
     public String toString() {
-        return "main.Utilisateur[ login=" + login + " ]";
+        return "entity.Utilisateur[ login=" + login + " ]";
     }
     
 }
