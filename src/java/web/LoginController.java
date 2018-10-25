@@ -10,7 +10,6 @@ import entity.Utilisateur;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -20,7 +19,6 @@ import javax.faces.context.FacesContext;
  * @author Nathan
  */
 @Named(value = "loginController")
-//@RequestScoped
 @SessionScoped
 public class LoginController implements Serializable {
 
@@ -41,7 +39,7 @@ public class LoginController implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
 
         if (user == null) {
-            context.addMessage(null, new FacesMessage("Unknown login, try again"));
+            context.addMessage(null, new FacesMessage("Login inconnu, veuillez réessayer"));
             loginU = null;
             mdp = null;
             return null;
@@ -51,7 +49,7 @@ public class LoginController implements Serializable {
                 return "index?faces-redirect=true";
             }
             else{
-                context.addMessage(null, new FacesMessage("Invalid password, try again"));
+                context.addMessage(null, new FacesMessage("Mot de passe invalide, veuillez réessayer"));
                 return null;
             }
         }

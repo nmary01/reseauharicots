@@ -8,15 +8,24 @@
         <title>Le réseau des haricots</title>
     </h:head>
     <h:body>
+        <p:messages id="messages" showDetail="true" closable="true">
+                <p:autoUpdate />
+        </p:messages>
         <h3>Proposer une offre</h3>
         <h:form>
+            
             <p:outputLabel value="Produit:" for="produit"/>
-            <p:autoComplete id="produit" minQueryLength="3" value="#{vueO.nomProduit}" completeMethod="#{vueO.completeText}"/><br/>
-            <p:outputLabel value="Quantité:" for="quantite"/>
-            <p:inputText id="quantite" value="#{vueO.quantite}"/><br/>
-            <p:outputLabel value="Prix Unitaire Min:" for="pumin"/>
-            <p:inputText id="pumin" value="#{vueO.prixMin}"/><br/>
-            <p:commandButton value="Proposer une offre" ajax="false" action="#{vueO.addOffre()}"/>
+            <p:autoComplete id="produit" minQueryLength="1" value="#{vueO.nomProduit}" completeMethod="#{vueO.completeText}"/><br/>
+            <p:outputLabel value="Quantité (g):" for="quantite"/>
+            <div class="knob-container  ui-corner-all">
+                <p:knob id="quantite" value="#{vueO.quantite}" min="0" max="3000" step="50"/><br />
+            </div>
+            <p:outputLabel value="Prix au kilo min (€):" for="pumin"/>
+            <h:panelGrid columns="1" style="margin-bottom: 10px">
+                <p:inputNumber id="pumin" value="#{vueO.prixMin}" symbol=" €" />
+                <p:slider for="pumin" minValue="0.0" maxValue="15.0" step="0.1" />
+            </h:panelGrid><br/>
+            <p:commandButton value="Proposer une offre" ajax="false" action="#{vueO.addOffre(loginController.loginU)}" update="messages" />
         </h:form>
         <h3>Vos offres</h3>
         <p:dataTable value="#{vueO.offres}" var="offre" draggableColumns="true">
@@ -34,6 +43,9 @@
             </p:column>
             <p:column headerText="Prix unitaire min">
                 <h:outputText value="#{offre.prixUnitaireMin}"/>
+            </p:column>
+            <p:column headerText="Utilisateur">
+                <h:outputText value="#{offre.login.login}"/>
             </p:column>
         </p:dataTable>
         <h:link value="Page d'accueil" outcome="index"/>
