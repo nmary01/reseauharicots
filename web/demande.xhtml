@@ -5,13 +5,14 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
+        <link rel="stylesheet" href="style.css" />
         <title>Le réseau des haricots</title>
     </h:head>
     <h:body>
         <p:messages id="messages" showDetail="true" closable="true">
                 <p:autoUpdate />
         </p:messages>
-        <h3>Faire une demande</h3>
+        <h2>Faire une demande</h2>
         <h:form>
             <p:outputLabel value="Produit:" for="produit"/>
             <p:autoComplete id="produit" minQueryLength="1" value="#{vueD.nomProduit}" completeMethod="#{vueD.completeText}"/><br/>
@@ -26,8 +27,8 @@
             </h:panelGrid><br/>
             <p:commandButton value="Faire une demande" ajax="false" action="#{vueD.addDemande(loginController.loginU)}" update="messages"/>
         </h:form>
-        <h3>Vos demandes</h3>
-        <p:dataTable value="#{vueD.getDemandesUser(loginController.loginU)}" var="demande" draggableColumns="true">
+        <h2>Vos demandes</h2>
+        <p:dataTable value="#{vueD.getDemandesUser(loginController.loginU)}" var="demande" draggableColumns="true" >
             <p:column headerText="Id Demande">
                 <h:outputText value="#{demande.idDemande}"/>
             </p:column>

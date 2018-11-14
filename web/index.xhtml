@@ -5,124 +5,133 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
+        <link rel="stylesheet" href="style.css" />
         <title>Le réseau des haricots</title>
     </h:head>
     <h:body>
-        <h1>Bienvenue sur le réseau des haricots !</h1>
-        <h:panelGroup rendered="#{not empty user}">
-            <h3>Bienvenue, Haricot-#{user.login}</h3>
-            <h:form>
-                <p:commandButton value="logout" action="#{loginController.logout}" />
-            </h:form>
+        <div id="entete">
+            <div class="enteteEl">
+                <img src="logo.png" alt="BeanLogo" width="70px" height="70px"/>
+                <h1>LE RESEAU DES HARICOTS !</h1>
+            </div>
+            <div>
+                <p:button class="menubutton" value="Page de connexion" outcome="connection" /><br/>
+                <p:button class="menubutton" value="Faire une demande" outcome="demande" /><br/>
+                <p:button class="menubutton" value="Proposer une offre" outcome="offre"/>
+            </div>
+        </div>
+        <div id="logged">
+            <h:panelGroup rendered="#{not empty user}">
+                <div>
+                    <h3>Bienvenue, <span class="spangreen">Haricot-#{user.login}</span></h3>
+                </div>
+                <div>
+                    <h:form>
+                        <p:commandButton value="Se déconnecter" action="#{loginController.logout}" />
+                    </h:form>
+                </div>
+            </h:panelGroup>
+        </div>
+
+        <h:panelGroup rendered="#{empty user}">
+            <h3>Veuillez vous connecter pour pouvoir accéder au réseau</h3>
         </h:panelGroup>
-        <p:dataTable value="#{vue.utilisateurs}" var="user" draggableColumns="true">
-            <p:column headerText="Login">
-                <h:outputText value="#{user.login}"/>
-            </p:column>
-            <p:column headerText="Mdp">
-                <h:outputText value="#{user.mdp}"/>
-            </p:column>
-            <p:column headerText="Prénom">
-                <h:outputText value="#{user.prenom}"/>
-            </p:column>
-            <p:column headerText="Nom">
-                <h:outputText value="#{user.nom}"/>
-            </p:column>
-            <p:column headerText="Email">
-                <h:outputText value="#{user.email}"/>
-            </p:column>
-            <p:column headerText="Ville">
-                <h:outputText value="#{user.idVille.nomVille}"/>
-            </p:column>
-            <p:column headerText="Region">
-                <h:outputText value="#{user.idVille.idRegion.nomRegion}"/>
-            </p:column>
-        </p:dataTable>
-        <h:link value="Page de connexion" outcome="connection" /><br/>
-        <h:link value="Faire une demande" outcome="demande" /><br/>
-        <h:link value="Proposer une offre" outcome="offre"/>
+
         <h:panelGroup rendered="#{not empty user}">
-            <h2>Vos demandes</h2>
-            <p:dataTable value="#{vueD.getDemandesUser(loginController.loginU)}" var="demande" draggableColumns="true" rows="5"
-                 paginator="true"
-                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                 rowsPerPageTemplate="5,20">
-                <p:column headerText="Date">
-                    <h:outputText value="#{demande.date}"/>
-                </p:column>
-                <p:column headerText="Produit">
-                    <h:outputText value="#{demande.idProduit.nomProduit}"/>
-                </p:column>
-                <p:column headerText="Quantité (en g)">
-                    <h:outputText value="#{demande.quantite}"/>
-                </p:column>
-                <p:column headerText="Prix unitaire max (en €)">
-                    <h:outputText value="#{demande.prixUnitaireMax}"/>
-                </p:column>
-            </p:dataTable>
-            
-            <h2>Vos offres</h2>
-            <p:dataTable value="#{vueO.getOffresUser(loginController.loginU)}" var="offre" draggableColumns="true" rows="5"
-                 paginator="true"
-                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                 rowsPerPageTemplate="5,20">
-                <p:column headerText="Date">
-                    <h:outputText value="#{offre.date}"/>
-                </p:column>
-                <p:column headerText="Produit">
-                    <h:outputText value="#{offre.idProduit.nomProduit}"/>
-                </p:column>
-                <p:column headerText="Quantité (en g)">
-                    <h:outputText value="#{offre.quantite}"/>
-                </p:column>
-                <p:column headerText="Prix unitaire min (en €)">
-                    <h:outputText value="#{offre.prixUnitaireMin}"/>
-                </p:column>
-            </p:dataTable>
-            
-            <h2>Ces offres correspondent à vos demandes !</h2>
-            <p:dataTable value="#{vueEx.getRelevantOffers(loginController.loginU)}" var="offre" draggableColumns="true" rows="5"
-                 paginator="true"
-                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                 rowsPerPageTemplate="5,20">
-                <p:column headerText="Date">
-                    <h:outputText value="#{offre.date}"/>
-                </p:column>
-                <p:column headerText="Produit">
-                    <h:outputText value="#{offre.idProduit.nomProduit}"/>
-                </p:column>
-                <p:column headerText="Quantité (en g)">
-                    <h:outputText value="#{offre.quantite}"/>
-                </p:column>
-                <p:column headerText="Prix unitaire min (en €)">
-                    <h:outputText value="#{offre.prixUnitaireMin}"/>
-                </p:column>
-                <p:column headerText="Vendeur">
-                    <h:outputText value="#{offre.login.login}"/>
-                </p:column>
-            </p:dataTable>
-            
-            <h2>Vous pouvez répondre à ces demandes !</h2>
-            <p:dataTable value="#{vueEx.getRelevantDemandes(loginController.loginU)}" var="demande" draggableColumns="true" rows="5"
-                 paginator="true"
-                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                 rowsPerPageTemplate="5,20">
-                <p:column headerText="Date">
-                    <h:outputText value="#{demande.date}"/>
-                </p:column>
-                <p:column headerText="Produit">
-                    <h:outputText value="#{demande.idProduit.nomProduit}"/>
-                </p:column>
-                <p:column headerText="Quantité (en g)">
-                    <h:outputText value="#{demande.quantite}"/>
-                </p:column>
-                <p:column headerText="Prix unitaire max (en €)">
-                    <h:outputText value="#{demande.prixUnitaireMax}"/>
-                </p:column>
-                <p:column headerText="Acheteur">
-                    <h:outputText value="#{demande.login.login}"/>
-                </p:column>
-            </p:dataTable>
+            <div class= "supertabs">
+                <div class="tabs">
+                    <h2>Vos demandes</h2>
+
+                    <p:dataTable class="dt" value="#{vueD.getDemandesUser(loginController.loginU)}" var="demande" draggableColumns="true" rows="5"
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,20">
+                        <p:column headerText="Date">
+                            <h:outputText value="#{demande.date}"/>
+                        </p:column>
+                        <p:column headerText="Produit">
+                            <h:outputText value="#{demande.idProduit.nomProduit}"/>
+                        </p:column>
+                        <p:column headerText="Quantité (en g)">
+                            <h:outputText value="#{demande.quantite}"/>
+                        </p:column>
+                        <p:column headerText="Prix unitaire max (en €)">
+                            <h:outputText value="#{demande.prixUnitaireMax}"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+
+                <div class="tabs">
+                    <h2>Vos offres</h2>
+
+                    <p:dataTable class="dt" value="#{vueO.getOffresUser(loginController.loginU)}" var="offre" draggableColumns="true" rows="5"
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,20">
+                        <p:column headerText="Date">
+                            <h:outputText value="#{offre.date}"/>
+                        </p:column>
+                        <p:column headerText="Produit">
+                            <h:outputText value="#{offre.idProduit.nomProduit}"/>
+                        </p:column>
+                        <p:column headerText="Quantité (en g)">
+                            <h:outputText value="#{offre.quantite}"/>
+                        </p:column>
+                        <p:column headerText="Prix unitaire min (en €)">
+                            <h:outputText value="#{offre.prixUnitaireMin}"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
+            <div class="supertabs">
+                <div class="tabs">
+                    <h2>Ces offres correspondent à vos demandes !</h2>
+                    <p:dataTable class="dt" value="#{vueEx.getRelevantOffers(loginController.loginU)}" var="offre" draggableColumns="true" rows="5"
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,20">
+                        <p:column headerText="Date">
+                            <h:outputText value="#{offre.date}"/>
+                        </p:column>
+                        <p:column headerText="Produit">
+                            <h:outputText value="#{offre.idProduit.nomProduit}"/>
+                        </p:column>
+                        <p:column headerText="Quantité (en g)">
+                            <h:outputText value="#{offre.quantite}"/>
+                        </p:column>
+                        <p:column headerText="Prix unitaire min (en €)">
+                            <h:outputText value="#{offre.prixUnitaireMin}"/>
+                        </p:column>
+                        <p:column headerText="Vendeur">
+                            <h:outputText value="#{offre.login.login}"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+                <div class="tabs">
+                    <h2>Vous pouvez répondre à ces demandes !</h2>
+                    <p:dataTable class="dt" value="#{vueEx.getRelevantDemandes(loginController.loginU)}" var="demande" draggableColumns="true" rows="5"
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,20">
+                        <p:column headerText="Date">
+                            <h:outputText value="#{demande.date}"/>
+                        </p:column>
+                        <p:column headerText="Produit">
+                            <h:outputText value="#{demande.idProduit.nomProduit}"/>
+                        </p:column>
+                        <p:column headerText="Quantité (en g)">
+                            <h:outputText value="#{demande.quantite}"/>
+                        </p:column>
+                        <p:column headerText="Prix unitaire max (en €)">
+                            <h:outputText value="#{demande.prixUnitaireMax}"/>
+                        </p:column>
+                        <p:column headerText="Acheteur">
+                            <h:outputText value="#{demande.login.login}"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
+
         </h:panelGroup>
     </h:body>
 </html>

@@ -5,13 +5,14 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
+        <link rel="stylesheet" href="style.css" />
         <title>Le réseau des haricots</title>
     </h:head>
     <h:body>
         <p:messages id="messages" showDetail="true" closable="true">
                 <p:autoUpdate />
         </p:messages>
-        <h3>Proposer une offre</h3>
+        <h2>Proposer une offre</h2>
         <h:form>
             
             <p:outputLabel value="Produit:" for="produit"/>
@@ -27,8 +28,11 @@
             </h:panelGrid><br/>
             <p:commandButton value="Proposer une offre" ajax="false" action="#{vueO.addOffre(loginController.loginU)}" update="messages" />
         </h:form>
-        <h3>Vos offres</h3>
-        <p:dataTable value="#{vueO.offres}" var="offre" draggableColumns="true">
+        <h2>Vos offres</h2>
+        <p:dataTable value="#{vueO.offres}" var="offre" draggableColumns="true" rows="5"
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,20">
             <p:column headerText="Id Offre">
                 <h:outputText value="#{offre.idOffre}"/>
             </p:column>
