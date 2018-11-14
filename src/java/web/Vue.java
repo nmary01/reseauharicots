@@ -221,4 +221,5 @@ public class Vue implements Serializable {
          
         context.addMessage(null, new FacesMessage("Connexion Réussie"));
     }
+    
 }

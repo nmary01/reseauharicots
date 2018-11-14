@@ -60,7 +60,7 @@ public class Demande implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "PrixUnitaireMax")
-    private int prixUnitaireMax;
+    private float prixUnitaireMax;
     @JoinColumn(name = "IdProduit", referencedColumnName = "IdProduit")
     @ManyToOne(optional = false)
     private Produit idProduit;
@@ -108,11 +108,11 @@ public class Demande implements Serializable {
         this.quantite = quantite;
     }
 
-    public int getPrixUnitaireMax() {
+    public float getPrixUnitaireMax() {
         return prixUnitaireMax;
     }
 
-    public void setPrixUnitaireMax(int prixUnitaireMax) {
+    public void setPrixUnitaireMax(float prixUnitaireMax) {
         this.prixUnitaireMax = prixUnitaireMax;
     }
 

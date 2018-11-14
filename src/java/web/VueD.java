@@ -37,7 +37,7 @@ public class VueD implements Serializable {
     UtilisateurFacadeLocal utilisateurDAO;
 
     int quantite;
-    int prixMax;
+    float prixMax;
     String nomProduit;
 
     /**
@@ -79,11 +79,11 @@ public class VueD implements Serializable {
         this.quantite = quantite;
     }
 
-    public int getPrixMax() {
+    public float getPrixMax() {
         return prixMax;
     }
 
-    public void setPrixMax(int prixMax) {
+    public void setPrixMax(float prixMax) {
         this.prixMax = prixMax;
     }
 
@@ -102,12 +102,13 @@ public class VueD implements Serializable {
 
     public List<Demande> getDemandesUser(String login) {
         List<Demande> demandes = demandeDAO.findAll();
+        List<Demande> tmp = new ArrayList<>();
         for (Demande d : demandes) {
-            if (!d.getLogin().getLogin().equals(login)) {
-                demandes.remove(d);
+            if (d.getLogin().getLogin().equals(login)) {
+                tmp.add(d);
             }
         }
-        return demandes;
+        return tmp;
     }
 
     public int findIdProduit(String nomP) {

@@ -60,7 +60,7 @@ public class Offre implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "PrixUnitaireMin")
-    private int prixUnitaireMin;
+    private float prixUnitaireMin;
     @JoinColumn(name = "IdProduit", referencedColumnName = "IdProduit")
     @ManyToOne(optional = false)
     private Produit idProduit;
@@ -77,7 +77,7 @@ public class Offre implements Serializable {
         this.idOffre = idOffre;
     }
 
-    public Offre(Integer idOffre, Date date, int quantite, int prixUnitaireMin) {
+    public Offre(Integer idOffre, Date date, int quantite, float prixUnitaireMin) {
         this.idOffre = idOffre;
         this.date = date;
         this.quantite = quantite;
@@ -108,11 +108,11 @@ public class Offre implements Serializable {
         this.quantite = quantite;
     }
 
-    public int getPrixUnitaireMin() {
+    public float getPrixUnitaireMin() {
         return prixUnitaireMin;
     }
 
-    public void setPrixUnitaireMin(int prixUnitaireMin) {
+    public void setPrixUnitaireMin(float prixUnitaireMin) {
         this.prixUnitaireMin = prixUnitaireMin;
     }
 

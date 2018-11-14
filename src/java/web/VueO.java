@@ -36,7 +36,7 @@ public class VueO implements Serializable {
     UtilisateurFacadeLocal utilisateurDAO;
 
     int quantite;
-    int prixMin;
+    float prixMin;
     String nomProduit;
 
     /**
@@ -54,11 +54,11 @@ public class VueO implements Serializable {
         this.offreDAO = offreDAO;
     }
 
-    public int getPrixMin() {
+    public float getPrixMin() {
         return prixMin;
     }
 
-    public void setPrixMin(int prixMin) {
+    public void setPrixMin(float prixMin) {
         this.prixMin = prixMin;
     }
 
@@ -89,6 +89,17 @@ public class VueO implements Serializable {
     public List<Offre> getOffres() {
         List<Offre> offres = offreDAO.findAll();
         return offres;
+    }
+    
+    public List<Offre> getOffresUser(String login) {
+        List<Offre> offres = offreDAO.findAll();
+        List<Offre> tmp = new ArrayList<>();
+        for (Offre o : offres) {
+            if (o.getLogin().getLogin().equals(login)) {
+                tmp.add(o);
+            }
+        }
+        return tmp;
     }
 
     public int findIdProduit(String nomP) {

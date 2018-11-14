@@ -27,7 +27,7 @@
             <p:commandButton value="Faire une demande" ajax="false" action="#{vueD.addDemande(loginController.loginU)}" update="messages"/>
         </h:form>
         <h3>Vos demandes</h3>
-        <p:dataTable value="#{vueD.demandes}" var="demande" draggableColumns="true">
+        <p:dataTable value="#{vueD.getDemandesUser(loginController.loginU)}" var="demande" draggableColumns="true">
             <p:column headerText="Id Demande">
                 <h:outputText value="#{demande.idDemande}"/>
             </p:column>
