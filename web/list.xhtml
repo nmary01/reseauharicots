@@ -24,7 +24,7 @@
         </p:carousel>
 
         <h2>Fruits</h2>
-        <p:ring id="custom" value="#{vueList.getProduitsbyCategorie(2)}" var="fruit" styleClass="image-ring">
+        <p:ring value="#{vueList.getProduitsbyCategorie(2)}" var="fruit" styleClass="image-ring">
             <p:outputPanel style="text-align: center;" layout="block" >
                 #{fruit.nomProduit}<br/>
                 <p:graphicImage id="img" url="#{fruit.image}" height="100px" width="100px" />

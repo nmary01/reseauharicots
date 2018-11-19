@@ -51,7 +51,6 @@ public class Vue implements Serializable {
         nom="";
         email="";
         ville="";
-        regionsNames=new ArrayList<>();
     }
 
     public UtilisateurFacadeLocal getUtilisateurDAO() {
@@ -135,6 +134,7 @@ public class Vue implements Serializable {
     }
     
     public List<String> getRegionsNames(){
+        List<String> regionsNames= new ArrayList<>();
         for (Region r:regionDAO.findAll()){
             regionsNames.add(r.getNomRegion());
         }
