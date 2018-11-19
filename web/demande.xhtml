@@ -9,46 +9,56 @@
         <title>Le réseau des haricots</title>
     </h:head>
     <h:body>
+        <div class="enteteEl">
+            <img src="logo.png" alt="BeanLogo" width="70px" height="70px"/>
+            <h1>LE RESEAU DES HARICOTS !</h1>
+        </div>
+        <p:button value="Retour" outcome="index"/>
         <p:messages id="messages" showDetail="true" closable="true">
-                <p:autoUpdate />
+            <p:autoUpdate />
         </p:messages>
-        <h2>Faire une demande</h2>
-        <h:form>
-            <p:outputLabel value="Produit:" for="produit"/>
-            <p:autoComplete id="produit" minQueryLength="1" value="#{vueD.nomProduit}" completeMethod="#{vueD.completeText}"/><br/>
-            <p:outputLabel value="Quantité (g):" for="quantite"/>
-            <div class="knob-container  ui-corner-all">
-                <p:knob id="quantite" value="#{vueD.quantite}" min="0" max="3000" step="50"/><br />
+        <div id="divdemande">
+            <div>
+                <h2>Faire une demande</h2>
+                <h:form>
+                    <p:outputLabel value="Produit:" for="produit"/>
+                    <p:autoComplete id="produit" minQueryLength="1" value="#{vueD.nomProduit}" completeMethod="#{vueD.completeText}"/><br/>
+                    <p:outputLabel value="Quantité (g):" for="quantite"/>
+                    <div class="knob-container  ui-corner-all">
+                        <p:knob id="quantite" value="#{vueD.quantite}" min="0" max="3000" step="50"/><br />
+                    </div>
+                    <p:outputLabel value="Prix au kilo max (€):" for="pumax"/>
+                    <h:panelGrid columns="1" style="margin-bottom: 10px">
+                        <p:inputNumber id="pumax" value="#{vueD.prixMax}" symbol=" €" />
+                        <p:slider for="pumax" minValue="0.0" maxValue="15.0" step="0.1" />
+                    </h:panelGrid><br/>
+                    <p:commandButton value="Faire une demande" ajax="false" action="#{vueD.addDemande(loginController.loginU)}" update="messages"/>
+                </h:form>
             </div>
-            <p:outputLabel value="Prix au kilo max (€):" for="pumax"/>
-            <h:panelGrid columns="1" style="margin-bottom: 10px">
-                <p:inputNumber id="pumax" value="#{vueD.prixMax}" symbol=" €" />
-                <p:slider for="pumax" minValue="0.0" maxValue="15.0" step="0.1" />
-            </h:panelGrid><br/>
-            <p:commandButton value="Faire une demande" ajax="false" action="#{vueD.addDemande(loginController.loginU)}" update="messages"/>
-        </h:form>
-        <h2>Vos demandes</h2>
-        <p:dataTable value="#{vueD.getDemandesUser(loginController.loginU)}" var="demande" draggableColumns="true" >
-            <p:column headerText="Id Demande">
-                <h:outputText value="#{demande.idDemande}"/>
-            </p:column>
-            <p:column headerText="Date">
-                <h:outputText value="#{demande.date}"/>
-            </p:column>
-            <p:column headerText="Produit">
-                <h:outputText value="#{demande.idProduit.nomProduit}"/>
-            </p:column>
-            <p:column headerText="Quantité">
-                <h:outputText value="#{demande.quantite}"/>
-            </p:column>
-            <p:column headerText="Prix unitaire max">
-                <h:outputText value="#{demande.prixUnitaireMax}"/>
-            </p:column>
-            <p:column headerText="Utilisateur">
-                <h:outputText value="#{demande.login.login}"/>
-            </p:column>
-        </p:dataTable>
-        <h:link value="Page d'accueil" outcome="index"/>
+            <div>
+                <h2>Vos demandes</h2>
+                <p:dataTable value="#{vueD.getDemandesUser(loginController.loginU)}" var="demande" draggableColumns="true" rows="10"
+                             paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="10,50">
+                    <p:column headerText="Date">
+                        <h:outputText value="#{demande.date}"/>
+                    </p:column>
+                    <p:column headerText="Produit">
+                        <h:outputText value="#{demande.idProduit.nomProduit}"/>
+                    </p:column>
+                    <p:column headerText="Quantité">
+                        <h:outputText value="#{demande.quantite}"/>
+                    </p:column>
+                    <p:column headerText="Prix unitaire max">
+                        <h:outputText value="#{demande.prixUnitaireMax}"/>
+                    </p:column>
+                    <p:column headerText="Utilisateur">
+                        <h:outputText value="#{demande.login.login}"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </div>
     </h:body>
 </html>
 
