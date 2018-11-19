@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <link rel="stylesheet" href="style.css" />
+        <title>Le réseau des haricots</title>
+    </h:head>
+    <h:body>
+        <div class="enteteEl">
+            <img src="resources/logo.png" alt="BeanLogo" width="70px" height="70px"/>
+            <h1>LE RESEAU DES HARICOTS !</h1>
+        </div>
+        <p:button value="Retour" outcome="index"/>
+        <h2>Légumes</h2>
+        <p:carousel value="#{vueList.getProduitsbyCategorie(1)}" var="legume" itemStyle="text-align:center" responsive="true">
+            <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank">
+                <h:outputText value="#{legume.nomProduit}"/><br/>
+                <p:graphicImage height="100px" width="100px" url="#{legume.image}"/>
+
+            </p:panelGrid>
+        </p:carousel>
+
+        <h2>Fruits</h2>
+        <p:ring id="custom" value="#{vueList.getProduitsbyCategorie(2)}" var="fruit" styleClass="image-ring">
+            <p:outputPanel style="text-align: center;" layout="block" >
+                #{fruit.nomProduit}<br/>
+                <p:graphicImage id="img" url="#{fruit.image}" height="100px" width="100px" />
+            </p:outputPanel>
+        </p:ring>
+
+        <h2>Fruits secs</h2>
+        <p:dataGrid var="fruitSec" value="#{vueList.getProduitsbyCategorie(3)}" columns="3" layout="grid"
+                    rows="2" paginator="true"
+                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+
+            <p:panel header="#{fruitSec.nomProduit}" style="text-align:center">
+                <h:panelGrid columns="1" style="width:100%">
+                    <p:graphicImage url="#{fruitSec.image}" height="100px" width="100px"/>
+                </h:panelGrid>
+            </p:panel>
+        </p:dataGrid>
+
+    </h:body>
+</html>
+

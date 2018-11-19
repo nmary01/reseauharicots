@@ -11,13 +11,17 @@
     <h:body>
         <div id="entete">
             <div class="enteteEl">
-                <img src="logo.png" alt="BeanLogo" width="70px" height="70px"/>
+                <img src="resources/logo.png" alt="BeanLogo" width="70px" height="70px"/>
                 <h1>LE RESEAU DES HARICOTS !</h1>
             </div>
             <div>
-                <p:button class="menubutton" value="Page de connexion" outcome="connection" /><br/>
+                <h:panelGroup rendered="#{empty user}">
+                    <p:button class="menubutton" value="Page de connexion" outcome="connection" /><br/>
+                </h:panelGroup>
                 <p:button class="menubutton" value="Faire une demande" outcome="demande" /><br/>
-                <p:button class="menubutton" value="Proposer une offre" outcome="offre"/>
+                <p:button class="menubutton" value="Proposer une offre" outcome="offre"/><br/>
+                <p:button class="menubutton" value="Liste des produits" outcome="list" /><br/>
+                
             </div>
         </div>
         <div id="logged">
@@ -27,7 +31,8 @@
                 </div>
                 <div>
                     <h:form>
-                        <p:commandButton value="Se déconnecter" action="#{loginController.logout}" />
+                        <p:button class="menubutton" value="Administration" outcome="admin"/><br/>
+                        <p:commandButton class="menubutton" value="Se déconnecter" action="#{loginController.logout}" />
                     </h:form>
                 </div>
             </h:panelGroup>

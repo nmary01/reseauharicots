@@ -13,7 +13,7 @@ and open the template in the editor.
     font-family: Arial, Helvetica, sans-serif;
 }
 
-#entete, #logged, #divdemande
+#entete, #logged, #divdemande, #divoffre
 {
     display: flex;
     justify-content: space-between;
@@ -23,7 +23,7 @@ h1
 {
     color: green;
     font-weight: bold;
-    
+
 }
 
 h2
@@ -56,11 +56,22 @@ h2
 
 #coBody
 {
-   display: flex;
-   justify-content: space-around;
+    display: flex;
+    justify-content: space-around;
 }
 
 .coForm
 {
     margin-bottom: 7px;
+}
+
+.image-ring .ui-ring-item img 
+{
+    width: 100%;
+    height: 100%;
+}
+
+.image-ring .ui-ring-item 
+{
+    border:0 none;
 }
