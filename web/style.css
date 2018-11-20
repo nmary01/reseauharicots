@@ -43,10 +43,6 @@ h2
     padding-bottom: 40px;
 }
 
-.menubutton
-{
-    margin-bottom: 7px;
-}
 
 .spangreen
 {
@@ -72,4 +68,18 @@ h2
 .image-ring .ui-ring-item img {
     width: 100%;
 }
+
+.menubutton
+{
+    margin-bottom: 7px;
+    float: right;
+}
+
+#graphs
+{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
 

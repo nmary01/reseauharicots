@@ -30,27 +30,30 @@ public class Vue implements Serializable {
 
     @EJB
     UtilisateurFacadeLocal utilisateurDAO;
-    String login;
-    String mdp;
-    String prenom;
-    String nom;
-    String email;
-    String ville;
-    String region;
-    
+    private String login;
+    private String mdp;
+    private String prenom;
+    private String nom;
+    private String email;
+    private String ville;
+    private String region;
+    private String nomDestinaire;
+    private String raison;
+    private String message;
+
     @EJB
     VilleFacadeLocal villeDAO;
     @EJB
     RegionFacadeLocal regionDAO;
-    List<String> regionsNames;
-    
-    public Vue(){
-        login="";
-        mdp="";
-        prenom="";
-        nom="";
-        email="";
-        ville="";
+    private List<String> regionsNames;
+
+    public Vue() {
+        login = "";
+        mdp = "";
+        prenom = "";
+        nom = "";
+        email = "";
+        ville = "";
     }
 
     public UtilisateurFacadeLocal getUtilisateurDAO() {
@@ -77,7 +80,6 @@ public class Vue implements Serializable {
         this.regionDAO = regionDAO;
     }
 
-    
     public String getLogin() {
         return login;
     }
@@ -117,30 +119,30 @@ public class Vue implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    public List<Utilisateur> getUtilisateurs(){
-        List<Utilisateur> utilisateurs=utilisateurDAO.findAll();
+
+    public List<Utilisateur> getUtilisateurs() {
+        List<Utilisateur> utilisateurs = utilisateurDAO.findAll();
         return utilisateurs;
     }
-    
-    public List<Ville> getVilles(){
-        List<Ville> villes=villeDAO.findAll();
+
+    public List<Ville> getVilles() {
+        List<Ville> villes = villeDAO.findAll();
         return villes;
     }
 
-    public List<Region> getRegions(){
-        List<Region> regions=regionDAO.findAll();
+    public List<Region> getRegions() {
+        List<Region> regions = regionDAO.findAll();
         return regions;
     }
-    
-    public List<String> getRegionsNames(){
-        List<String> regionsNames= new ArrayList<>();
-        for (Region r:regionDAO.findAll()){
+
+    public List<String> getRegionsNames() {
+        List<String> regionsNames = new ArrayList<>();
+        for (Region r : regionDAO.findAll()) {
             regionsNames.add(r.getNomRegion());
         }
         return regionsNames;
     }
-    
+
     public String getVille() {
         return ville;
     }
@@ -156,70 +158,112 @@ public class Vue implements Serializable {
     public void setRegion(String region) {
         this.region = region;
     }
-    
-    public Ville findVille (String ville,int idRegion){
-        for (Ville v:villeDAO.findAll()){
-            if (v.getNomVille().equals(ville)){
+
+    public Ville findVille(String ville, int idRegion) {
+        for (Ville v : villeDAO.findAll()) {
+            if (v.getNomVille().equals(ville)) {
                 return v;
             }
         }
-        Ville newVille=new Ville();
+        Ville newVille = new Ville();
         newVille.setNomVille(ville);
         newVille.setIdRegion(regionDAO.find(idRegion));
         villeDAO.create(newVille);
         return newVille;
     }
-    
-    public int findIdRegion (String nomRegion){
-        for (Region r:regionDAO.findAll()){
-            if(r.getNomRegion().equals(nomRegion)){
+
+    public int findIdRegion(String nomRegion) {
+        for (Region r : regionDAO.findAll()) {
+            if (r.getNomRegion().equals(nomRegion)) {
                 return r.getIdRegion();
             }
         }
         return -1;
     }
-    
+
     public List<String> completeText(String query) {
         List<String> results = new ArrayList<>();
-        for (Ville v:villeDAO.findAll()){
-            if (v.getNomVille().startsWith(query)){
+        for (Ville v : villeDAO.findAll()) {
+            if (v.getNomVille().startsWith(query)) {
                 results.add(v.getNomVille());
             }
         }
-         
+
         return results;
     }
-    
-    public void addUtilisateur(){
-        Utilisateur newUtilisateur=new Utilisateur();
+
+    public void addUtilisateur() {
+        Utilisateur newUtilisateur = new Utilisateur();
         newUtilisateur.setLogin(login);
         newUtilisateur.setMdp(mdp);
         newUtilisateur.setPrenom(prenom);
         newUtilisateur.setNom(nom);
         newUtilisateur.setEmail(email);
         newUtilisateur.setAdmin(false);
-        newUtilisateur.setIdVille(findVille(ville,findIdRegion(region)));
-        
+        newUtilisateur.setIdVille(findVille(ville, findIdRegion(region)));
+
         utilisateurDAO.create(newUtilisateur);
-        login="";
-        mdp="";
-        prenom="";
-        nom="";
-        email="";
-        ville="";
-        
+        login = "";
+        mdp = "";
+        prenom = "";
+        nom = "";
+        email = "";
+        ville = "";
+
     }
-    
-    public void removeUtilisateur(){
-        Utilisateur utilisateur=utilisateurDAO.find(login);
+
+    public void removeUtilisateur() {
+        Utilisateur utilisateur = utilisateurDAO.find(login);
         utilisateurDAO.remove(utilisateur);
-        login="";
+        login = "";
     }
-    
+
     public void checkConnect() {
         FacesContext context = FacesContext.getCurrentInstance();
-         
+
         context.addMessage(null, new FacesMessage("Connexion Réussie"));
     }
-    
+
+    public String getNomDestinaire() {
+        return nomDestinaire;
+    }
+
+    public void setNomDestinaire(String nomDestinaire) {
+        this.nomDestinaire = nomDestinaire;
+    }
+
+    public String getRaison() {
+        return raison;
+    }
+
+    public void setRaison(String raison) {
+        this.raison = raison;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void envoiMessage() {
+        Utilisateur user = utilisateurDAO.find(nomDestinaire);
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (user == null) {
+            context.addMessage(null, new FacesMessage("Utilisateur inconnu, veuillez réessayer"));
+        } else {
+            if (raison != null && !message.equals("")) {
+                context.addMessage(null, new FacesMessage("Succès !", "Message envoyé à " + nomDestinaire));
+                //Implémentation ici pour stocker le message
+            } else {
+                context.addMessage(null, new FacesMessage("Erreur", "Champs incomplets"));
+            }
+        }
+        nomDestinaire = null;
+        raison = null;
+        message = null;
+    }
 }

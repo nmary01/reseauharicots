@@ -32,8 +32,8 @@ public class VueList implements Serializable {
     @EJB
     CategorieFacadeLocal categorieDAO;
 
-    String nomProduit;
-    String nomCategorie;
+    private String nomProduit;
+    private String nomCategorie;
 
     /**
      * Creates a new instance of VueList

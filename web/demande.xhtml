@@ -40,7 +40,7 @@
                 <p:dataTable class="dt" value="#{vueD.getDemandesUser(loginController.loginU)}" var="demande" draggableColumns="true" rows="10"
                              paginator="true"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             rowsPerPageTemplate="10,50">
+                             rowsPerPageTemplate="10,50" style="float:right; padding-left: 100px;">
                     <p:column headerText="Date">
                         <h:outputText value="#{demande.date}"/>
                     </p:column>

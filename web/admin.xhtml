@@ -25,12 +25,34 @@
                     <p:selectOneMenu class="coForm" id="categorie" value="#{vueList.nomCategorie}">
                         <f:selectItems value="#{vueList.categorieNames}" />
                     </p:selectOneMenu><br/>
+                    <p:outputLabel value="Image:" for="image"/><br/>
+                    <p:fileUpload id="image" mode="advanced" dragDropSupport="true"
+                                  sizeLimit="100000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="width: 400px"/><br/>
                     <p:commandButton value="Ajouter" ajax="false" action="#{vueList.addProduit()}" update="growlAjout"/>
-                </h:form>
+                </h:form><br/><br/><br/>
+                <p:treeTable value="#{treeProduits.root}" var="produit" style="width: 600px">
+                        <f:facet name="header">
+                            Suivi des quantités
+                        </f:facet>
+                        <p:column headerText="NomProduit">
+                            <h:outputText value="#{produit.nomProduit}" />
+                        </p:column>
+                        <p:column headerText="Quantité demandée (g)">
+                            <h:outputText value="#{produit.qtedemand}" />
+                        </p:column>
+                        <p:column headerText="Quantité proposée (g)">
+                            <h:outputText value="#{produit.qtepropos}" />
+                        </p:column>
+                    </p:treeTable>
             </div>
-            
+            <div id="stats">
+                <h2>Statistiques</h2>
+                <div id="graphs">
+                    <p:chart type="line" model="#{treeProduits.dateModel}" style="height:400px; width: 900px; float: right;"/><br/>
+                    <p:chart type="bar" model="#{treeProduits.barModel}" style="height:300px ; float: right;"/>
+                </div>
+            </div>
         </div>
-
     </h:body>
 </html>
 

@@ -14,14 +14,14 @@
                 <img src="resources/logo.png" alt="BeanLogo" width="70px" height="70px"/>
                 <h1>LE RESEAU DES HARICOTS !</h1>
             </div>
-            <div>
+            <div class="buttons">
                 <h:panelGroup rendered="#{empty user}">
                     <p:button class="menubutton" value="Page de connexion" outcome="connection" /><br/>
                 </h:panelGroup>
-                <p:button class="menubutton" value="Faire une demande" outcome="demande" /><br/>
-                <p:button class="menubutton" value="Proposer une offre" outcome="offre"/><br/>
-                <p:button class="menubutton" value="Liste des produits" outcome="list" /><br/>
-                
+                <p:button class="menubutton" value="Faire une demande" outcome="demande" style="float:right;"/><br/>
+                <p:button class="menubutton" value="Proposer une offre" outcome="offre" style="float:right;"/><br/>
+                <p:button class="menubutton" value="Liste des produits" outcome="list" style="float:right;"/><br/>
+
             </div>
         </div>
         <div id="logged">
@@ -29,12 +29,31 @@
                 <div>
                     <h3>Bienvenue, <span class="spangreen">Haricot-#{user.login}</span></h3>
                 </div>
-                <div>
+                <div class="buttons">
+                    <p:button class="menubutton" value="Administration" outcome="admin" style="float:right;"/><br/>
                     <h:form>
-                        <p:button class="menubutton" value="Administration" outcome="admin"/><br/>
-                        <p:commandButton class="menubutton" value="Se déconnecter" action="#{loginController.logout}" />
+                        <p:commandButton class="menubutton" value="Contacter un utilisateur" type="button" onclick="PF('contact').show();" style="float:right;" /><br/>
+                        <p:growl id="envoimsg" showDetail="true" sticky="true"/>
+                        <p:dialog header="Contacter un utilisateur" widgetVar="contact" minHeight="40">
+                            <p:outputLabel for="destinataire" value="Destinataire:"/><br/>
+                            <p:inputText id="destinataire" value="#{vue.nomDestinaire}"/><br/>
+                            <p:outputLabel for="raison" value="Raison:"/><br/>
+                            <p:selectOneMenu id="raison" value="#{vue.raison}">
+                                <f:selectItem itemLabel="Sélectionner" itemValue="" />
+                                <f:selectItem itemLabel="Son offre vous intéresse" itemValue="offre" />
+                                <f:selectItem itemLabel="Sa demande vous intéresse" itemValue="demande" />
+                            </p:selectOneMenu><br/>
+                            <p:outputLabel for="msg" value="Votre message:"/><br/>
+                            <p:inputTextarea id="msg" rows="10" cols="80" value="#{vue.message}"/><br/>
+                            <p:commandButton value="Envoyer" ajax="false" action="#{vue.envoiMessage}" update="envoimsg" /> 
+
+                        </p:dialog>
+                    </h:form>
+                    <h:form>
+                        <p:commandButton class="menubutton" value="Se déconnecter" action="#{loginController.logout}" style="float:right;"/>
                     </h:form>
                 </div>
+
             </h:panelGroup>
         </div>
 

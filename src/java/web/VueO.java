@@ -35,9 +35,9 @@ public class VueO implements Serializable {
     @EJB
     UtilisateurFacadeLocal utilisateurDAO;
 
-    int quantite;
-    float prixMin;
-    String nomProduit;
+    private int quantite;
+    private float prixMin;
+    private String nomProduit;
 
     /**
      * Creates a new instance of VueD

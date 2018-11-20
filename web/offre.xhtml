@@ -41,7 +41,7 @@
                 <p:dataTable class="dt" value="#{vueO.getOffresUser(loginController.loginU)}" var="offre" draggableColumns="true" rows="10"
                              paginator="true"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             rowsPerPageTemplate="10,50">
+                             rowsPerPageTemplate="10,50" style="float:right; padding-left: 100px;">
                     <p:column headerText="Date">
                         <h:outputText value="#{offre.date}"/>
                     </p:column>
