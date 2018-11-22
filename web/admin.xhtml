@@ -31,25 +31,57 @@
                     <p:commandButton value="Ajouter" ajax="false" action="#{vueList.addProduit()}" update="growlAjout"/>
                 </h:form><br/><br/><br/>
                 <p:treeTable value="#{treeProduits.root}" var="produit" style="width: 600px">
-                        <f:facet name="header">
-                            Suivi des quantités
-                        </f:facet>
-                        <p:column headerText="NomProduit">
-                            <h:outputText value="#{produit.nomProduit}" />
-                        </p:column>
-                        <p:column headerText="Quantité demandée (g)">
-                            <h:outputText value="#{produit.qtedemand}" />
-                        </p:column>
-                        <p:column headerText="Quantité proposée (g)">
-                            <h:outputText value="#{produit.qtepropos}" />
-                        </p:column>
-                    </p:treeTable>
+                    <f:facet name="header">
+                        Suivi des quantités
+                    </f:facet>
+                    <p:column headerText="NomProduit">
+                        <h:outputText value="#{produit.nomProduit}" />
+                    </p:column>
+                    <p:column headerText="Quantité demandée (g)">
+                        <h:outputText value="#{produit.qtedemand}" />
+                    </p:column>
+                    <p:column headerText="Quantité proposée (g)">
+                        <h:outputText value="#{produit.qtepropos}" />
+                    </p:column>
+                </p:treeTable>
             </div>
             <div id="stats">
                 <h2>Statistiques</h2>
                 <div id="graphs">
                     <p:chart type="line" model="#{treeProduits.dateModel}" style="height:400px; width: 900px; float: right;"/><br/>
-                    <p:chart type="bar" model="#{treeProduits.barModel}" style="height:300px ; float: right;"/>
+                    <p:chart type="bar" model="#{treeProduits.barModel}" style="height:300px ; float: right;"/> <br/>
+                    <h2>Utilisateurs</h2>
+                    <p:dataTable class="dt" value="#{vueList.users}" var="user" rows="5"
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,20">
+                        <p:column headerText="Login">
+                            <h:outputText value="#{user.login}"/>
+                        </p:column>
+                        <p:column headerText="Email">
+                            <h:outputText value="#{user.email}"/>
+                        </p:column>
+                        <p:column headerText="Prénom">
+                            <h:outputText value="#{user.prenom}"/>
+                        </p:column>
+                        <p:column headerText="Nom">
+                            <h:outputText value="#{user.nom}"/>
+                        </p:column>
+                        <p:column headerText="Région">
+                            <h:outputText value="#{user.idVille.idRegion.nomRegion}"/>
+                        </p:column>
+                        <p:column headerText="Supprimer">
+                            <h:form>
+                                <p:commandButton icon="ui ui-save" onclick="PF('deleteU').show();" />
+                                <p:dialog header="Supprimer un utilisateur" widgetVar="deleteU" minHeight="40">
+                                    Etes-vous sûr de vouloir supprimer #{user.login} ? <br/>
+                                    <p:commandButton value="Oui" ajax="false" action="#{vue.removeUtilisateur(user.login)}" update="growlAjout" />
+                                    <p:commandButton value="Non" ajax="false" action="#{vue.notRemoveUtilisateur()}" update="growlAjout" />
+                                    
+                                </p:dialog>
+                            </h:form>
+                        </p:column>
+                    </p:dataTable>
                 </div>
             </div>
         </div>

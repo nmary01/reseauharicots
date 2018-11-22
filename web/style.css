@@ -82,4 +82,8 @@ h2
     flex-direction: column;
 }
 
+.ui-delete
+{
+    background-image: url(resources/delete.png);
+}
 

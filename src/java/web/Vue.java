@@ -212,10 +212,16 @@ public class Vue implements Serializable {
 
     }
 
-    public void removeUtilisateur() {
-        Utilisateur utilisateur = utilisateurDAO.find(login);
+    public void removeUtilisateur(String pseudo) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Utilisateur utilisateur = utilisateurDAO.find(pseudo);
         utilisateurDAO.remove(utilisateur);
-        login = "";
+        context.addMessage(null, new FacesMessage("Utilisateur supprimé", pseudo + " a été supprimé"));
+    }
+    
+    public void notRemoveUtilisateur() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Suppression annulée"));
     }
 
     public void checkConnect() {
@@ -266,4 +272,5 @@ public class Vue implements Serializable {
         raison = null;
         message = null;
     }
+
 }

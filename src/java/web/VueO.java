@@ -38,6 +38,7 @@ public class VueO implements Serializable {
     private int quantite;
     private float prixMin;
     private String nomProduit;
+    private String message;
 
     /**
      * Creates a new instance of VueD
@@ -90,7 +91,7 @@ public class VueO implements Serializable {
         List<Offre> offres = offreDAO.findAll();
         return offres;
     }
-    
+
     public List<Offre> getOffresUser(String login) {
         List<Offre> offres = offreDAO.findAll();
         List<Offre> tmp = new ArrayList<>();
@@ -124,7 +125,7 @@ public class VueO implements Serializable {
     public void addOffre(String login) {
         FacesContext context = FacesContext.getCurrentInstance();
         if (login.isEmpty()) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erreur!","Veuillez vous connecter"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Veuillez vous connecter"));
         } else {
             Offre newOffre = new Offre();
             newOffre.setIdProduit(produitDAO.find(findIdProduit(nomProduit)));
@@ -136,10 +137,40 @@ public class VueO implements Serializable {
             newOffre.setLogin(utilisateurDAO.find(login));
 
             offreDAO.create(newOffre);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Succès","Offre enregistrée !"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès", "Offre enregistrée !"));
         }
-        prixMin=0;
-        nomProduit="";
-        quantite=0;
+        prixMin = 0;
+        nomProduit = "";
+        quantite = 0;
+    }
+
+    public void deleteOffre(int idOffre) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            Offre offre = offreDAO.find(idOffre);
+            offreDAO.remove(offre);
+            context.addMessage(null, new FacesMessage("Succès", "Offre supprimée !"));
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage("Erreur", "La suppression a échouée !"));
+        }
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void envoiMessageO(Offre o) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (!message.equals("")) {
+            context.addMessage(null, new FacesMessage("Succès !", "Message envoyé à " + o.getLogin().getLogin()));
+            //Implémentation ici pour stocker le message
+        } else {
+            context.addMessage(null, new FacesMessage("Erreur", "Champs incomplets"));
+        }
+
     }
 }

@@ -24,6 +24,9 @@
 
             </div>
         </div>
+        <p:growl id="deleteD"  life="3000" showDetail="true"/>
+        <p:growl id="deleteO"  life="3000" showDetail="true"/>
+        <p:growl id="envoimsg" showDetail="true" life="3000"/>
         <div id="logged">
             <h:panelGroup rendered="#{not empty user}">
                 <div>
@@ -33,7 +36,6 @@
                     <p:button class="menubutton" value="Administration" outcome="admin" style="float:right;"/><br/>
                     <h:form>
                         <p:commandButton class="menubutton" value="Contacter un utilisateur" type="button" onclick="PF('contact').show();" style="float:right;" /><br/>
-                        <p:growl id="envoimsg" showDetail="true" sticky="true"/>
                         <p:dialog header="Contacter un utilisateur" widgetVar="contact" minHeight="40">
                             <p:outputLabel for="destinataire" value="Destinataire:"/><br/>
                             <p:inputText id="destinataire" value="#{vue.nomDestinaire}"/><br/>
@@ -42,6 +44,7 @@
                                 <f:selectItem itemLabel="Sélectionner" itemValue="" />
                                 <f:selectItem itemLabel="Son offre vous intéresse" itemValue="offre" />
                                 <f:selectItem itemLabel="Sa demande vous intéresse" itemValue="demande" />
+                                <f:selectItem itemLabel="Autre" itemValue="autre" />
                             </p:selectOneMenu><br/>
                             <p:outputLabel for="msg" value="Votre message:"/><br/>
                             <p:inputTextarea id="msg" rows="10" cols="80" value="#{vue.message}"/><br/>
@@ -79,8 +82,13 @@
                         <p:column headerText="Quantité (en g)">
                             <h:outputText value="#{demande.quantite}"/>
                         </p:column>
-                        <p:column headerText="Prix unitaire max (en €)">
+                        <p:column headerText="Prix au kilo max (en €)">
                             <h:outputText value="#{demande.prixUnitaireMax}"/>
+                        </p:column>
+                        <p:column headerText="Supprimer">
+                            <h:form>
+                                <p:commandButton action="#{vueD.deleteDemande(demande.idDemande)}" update="deleteD" icon="ui ui-save" />
+                            </h:form>
                         </p:column>
                     </p:dataTable>
                 </div>
@@ -101,12 +109,19 @@
                         <p:column headerText="Quantité (en g)">
                             <h:outputText value="#{offre.quantite}"/>
                         </p:column>
-                        <p:column headerText="Prix unitaire min (en €)">
+                        <p:column headerText="Prix au kilo min (en €)">
                             <h:outputText value="#{offre.prixUnitaireMin}"/>
+                        </p:column>
+                        <p:column headerText="Supprimer">
+                            <h:form>
+                                <p:commandButton action="#{vueO.deleteOffre(offre.idOffre)}" update="deleteO" icon="ui-delete" />
+                            </h:form>
                         </p:column>
                     </p:dataTable>
                 </div>
             </div>
+
+
             <div class="supertabs">
                 <div class="tabs">
                     <h2>Ces offres correspondent à vos demandes !</h2>
@@ -123,11 +138,25 @@
                         <p:column headerText="Quantité (en g)">
                             <h:outputText value="#{offre.quantite}"/>
                         </p:column>
-                        <p:column headerText="Prix unitaire min (en €)">
+                        <p:column headerText="Prix au kilo min (en €)">
                             <h:outputText value="#{offre.prixUnitaireMin}"/>
                         </p:column>
                         <p:column headerText="Vendeur">
                             <h:outputText value="#{offre.login.login}"/>
+                        </p:column>
+                        <p:column headerText="Contacter">
+                            <h:form>
+                                <p:commandButton icon="ui ui-save" onclick="PF('contactO').show();" />
+                                <p:dialog header="Contacter un utilisateur" widgetVar="contactO" minHeight="40">
+                                    <h:outputLabel value="Destinataire:" /><br/>
+                                    <em>#{offre.login.login}</em><br/>
+                                    <h:outputLabel value="Raison:" /><br/>
+                                    <em>Son offre vous intéresse</em><br/>
+                                    <p:outputLabel for="msg" value="Votre message:"/><br/>
+                                    <p:inputTextarea id="msg" rows="10" cols="80" value="#{vueO.message}"/><br/>
+                                    <p:commandButton value="Envoyer" ajax="false" action="#{vueO.envoiMessageO(offre)}" update="envoimsg" /> 
+                                </p:dialog>
+                            </h:form>
                         </p:column>
                     </p:dataTable>
                 </div>
@@ -146,11 +175,25 @@
                         <p:column headerText="Quantité (en g)">
                             <h:outputText value="#{demande.quantite}"/>
                         </p:column>
-                        <p:column headerText="Prix unitaire max (en €)">
+                        <p:column headerText="Prix au kilo max (en €)">
                             <h:outputText value="#{demande.prixUnitaireMax}"/>
                         </p:column>
                         <p:column headerText="Acheteur">
                             <h:outputText value="#{demande.login.login}"/>
+                        </p:column>
+                        <p:column headerText="Contacter">
+                            <h:form>
+                                <p:commandButton icon="ui ui-save" onclick="PF('contactD').show();" />
+                                <p:dialog header="Contacter un utilisateur" widgetVar="contactD" minHeight="40">
+                                    <h:outputLabel value="Destinataire:" /><br/>
+                                    <em>#{demande.login.login}</em><br/>
+                                    <h:outputLabel value="Raison:" /><br/>
+                                    <em>Sa demande vous intéresse</em><br/>
+                                    <p:outputLabel for="msg" value="Votre message:"/><br/>
+                                    <p:inputTextarea id="msg" rows="10" cols="80" value="#{vueD.message}"/><br/>
+                                    <p:commandButton value="Envoyer" ajax="false" action="#{vueD.envoiMessageD(demande)}" update="envoimsg" /> 
+                                </p:dialog>
+                            </h:form>
                         </p:column>
                     </p:dataTable>
                 </div>

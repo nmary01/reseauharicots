@@ -7,8 +7,10 @@ package web;
 
 import dao.CategorieFacadeLocal;
 import dao.ProduitFacadeLocal;
+import dao.UtilisateurFacadeLocal;
 import entity.Categorie;
 import entity.Produit;
+import entity.Utilisateur;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,6 +33,9 @@ public class VueList implements Serializable {
 
     @EJB
     CategorieFacadeLocal categorieDAO;
+    
+    @EJB
+    UtilisateurFacadeLocal utilisateurDAO;
 
     private String nomProduit;
     private String nomCategorie;
@@ -120,5 +125,9 @@ public class VueList implements Serializable {
             categorieNames.add(c.getNomcategorie());
         }
         return categorieNames;
+    }
+    
+    public List<Utilisateur> getUsers(){
+        return utilisateurDAO.findAll();
     }
 }

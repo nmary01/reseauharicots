@@ -36,9 +36,10 @@ public class VueD implements Serializable {
     @EJB
     UtilisateurFacadeLocal utilisateurDAO;
 
-    int quantite;
-    float prixMax;
-    String nomProduit;
+    private int quantite;
+    private float prixMax;
+    private String nomProduit;
+    private String message;
 
     /**
      * Creates a new instance of VueD
@@ -146,10 +147,42 @@ public class VueD implements Serializable {
             newDemande.setLogin(utilisateurDAO.find(login));
 
             demandeDAO.create(newDemande);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Succès","Demande enregistrée !"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès", "Demande enregistrée !"));
         }
         prixMax = 0;
         nomProduit = "";
         quantite = 0;
+    }
+
+    public String deleteDemande(int idDemande) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            Demande demande = demandeDAO.find(idDemande);
+            demandeDAO.remove(demande);
+            context.addMessage(null, new FacesMessage("Succès", "Demande supprimée !"));
+            return "index?faces-redirect=true";
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage("Erreur", "La suppression a échouée !"));
+            return null;
+        }
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+    
+    public void envoiMessageD(Demande d) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (!message.equals("")) {
+            context.addMessage(null, new FacesMessage("Succès !", "Message envoyé à " + d.getLogin().getLogin()));
+            //Implémentation ici pour stocker le message
+        } else {
+            context.addMessage(null, new FacesMessage("Erreur", "Champs incomplets"));
+        }
+
     }
 }
